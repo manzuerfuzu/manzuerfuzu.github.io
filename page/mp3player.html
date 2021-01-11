@@ -115,26 +115,22 @@
 			Bmob.initialize("d120dedc62382103", "201068");
 			// Bmob.debug(true);  //上线后关闭
 			
-			var name = window.localStorage.getItem("name");
-			console.log(name)
+			
 			
 			var mp3list = []
 			
-			function cs(){
-				console.log(document.getElementById("kcmima").value)
-				// console.log($(#email).value)
-			}
+			
 			
 			function chaxunmp3(){
 				 const query = Bmob.Query('mp3');
 				 query.get(document.getElementById("kcmima").value).then(res => {
-				   console.log(res)
+				   // console.log(res)
 				   console.log('成功')
 				   // 获取mp3这列的数据
-				   console.log(res.mp3)
+				   // console.log(res.mp3)
 				   mp3list = res.mp3
 				   mp3name = res.mp3name
-				   console.log(res.mp3name)
+				   // console.log(res.mp3name)
 				   psAudio({
 				       audioSrcFile: 'soures',
 				       audioSrc: mp3name,
@@ -190,16 +186,7 @@
 		    // 不是外链不要传
 		    //不需要添加歌曲请在css中将按钮隐藏即可，其css样式为addSonBtn
 			
-			var mp3list1 = []
-			function jiazaimp3(){
-				// var time = 0;
-				// var timer = setInterval(function() {
-				// 	mp3list1 = mp3list
-				// 	console.log('加载播放列表成功')			
-				// 	return mp3list1
-				// }, 1000); 
-				
-			}
+			
 			
 			// console.log('出来了'+ mp3list1)
 		// var mp3list1 = ["https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a2cb75d0-134b-11eb-b997-9918a5dda011.mp3","https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a3584c80-134b-11eb-9dfb-6da8e309e0d8.mp3","https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a3f92060-134b-11eb-899d-733ae62bed2f.mp3","https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a53b6460-134b-11eb-899d-733ae62bed2f.mp3"]
