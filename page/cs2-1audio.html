@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>音乐播放条</title>
+		
+		<style type="text/css">
+			#fa{
+				width: 400px;
+				margin-bottom: :30px;
+				border: 1px solid #EC971F;
+			}
+			#son{
+				width: 0px;
+				height: 40px;
+				background-color: blueviolet;
+				text-align: center;
+				line-height: 40px;
+			}
+		</style>
+		
+	</head>
+	<body>
+		
+		<audio id="myAudio1" >
+		  <source src='https://res.wx.qq.com/voice/getvoice?mediaid=MjM5ODAzODMyOF8xMDAwMDI0MDg='  type="audio/mpeg">
+		您的浏览器不支持 audio 元素。
+		</audio>	
+		
+		<audio id="myAudio2" >
+		 
+		  <source src='https://res.wx.qq.com/voice/getvoice?mediaid=MjM5ODAzODMyOF8xMDAwMDIyOTg='  type="audio/mpeg">
+		您的浏览器不支持 audio 元素。
+		</audio>
+		
+		<div id="biaofu">
+				
+				<input type="text" id="kenum" value=""  />
+				<p>在上面输入框中输入要收听第几课</p>
+				
+			</div>
+			
+				<input type="submit" value="确认" style="background-color:#8A2BE2;width:100%;height:60px;font-size: 20px;" onclick="kenum();audioplay();yinchang()" />
+			
+		
+		<div >
+			
+			<input type="text" id="tiaozhuanfen" value=""  />分
+			<input type="text" id="tiaozhuanmiao" value=""  />秒
+			<p>在上面输入框中输入要跳转的时间点</p>
+			
+		</div>
+		
+			<input type="submit" value="跳转" style="background-color:#8A2BE2;width:100%;height:60px;font-size: 20px;" onclick="tiaozhuan()" />
+		
+			
+		
+		<button onclick="cs()">测试</button>	
+		
+		<audio id="myAudio1" >
+		  <source src='https://res.wx.qq.com/voice/getvoice?mediaid=MjM5ODAzODMyOF8xMDAwMDI0MDg='  type="audio/mpeg">
+		  <source src='https://res.wx.qq.com/voice/getvoice?mediaid=MjM5ODAzODMyOF8xMDAwMDIyOTg='  type="audio/mpeg">
+		您的浏览器不支持 audio 元素。
+		</audio>	
+		
+		<audio id="myAudio2" >
+		 
+		  <source src='https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a63ad300-134b-11eb-9dfb-6da8e309e0d8.mp3'  type="audio/mpeg">
+		您的浏览器不支持 audio 元素。
+		</audio>
+		
+		<audio id="myAudio3" >
+		 
+		  <source src='https://vkceyugu.cdn.bspapp.com/VKCEYUGU-aliyun-hjinhmzy11qaa4ebe2/a2cb75d0-134b-11eb-b997-9918a5dda011.mp3'  type="audio/mpeg">
+		您的浏览器不支持 audio 元素。
+		</audio>
+		
+		<br>
+		<button onclick="audioplay();zongchang();">播放</button>
+		<button onclick="audiopause()">暂停</button>
+		
+		
+		
+		<br>
+		
+		<button onclick="getCurTime()" type="button">获取当前播放的时间位置</button>
+		<p id="chang"></p>
+		
+		
+		<button onclick="myFunction()">点我获取当前音频时长</button>
+		
+		<p id="demo"></p>
+		
+		
+		<!-- 音乐播放条 -->
+		
+		<div id="fa">
+			<div id="son">
+				<span id="span1">0</span><span>/</span><span id="span2">0</span>
+			</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript">
+		var audios = document.getElementsByTagName("audio");
+		for (var i = 0; i < audios.length; i++) {
+			// console.log("audios "+i+"  SRC:" + audios[i].currentSrc);
+			audios[i].addEventListener('ended', function() {
+				// nextSibling 属性返回指定节点之后紧跟的节点，在相同的树层级中。
+				var nextAudio = this.nextSibling.nextSibling;
+				// tagName 属性返回元素的标签名。(大写)
+				if (nextAudio.tagName == "AUDIO") {
+					nextAudio.play();
+				}
+			}, false);
+		}
+		
+		
+		// ---------------------------
+		
+		var n
+		
+		function kenum(){
+		n = document.getElementById("kenum").value;
+		console.log(n)
+		
+		}
+		
+		
+		function cs(){
+			var n= prompt('请输入要收听第几节课')
+		
+			alert(addobj[n])
+			return addobj[n]
+		}
+		
+		
+		
+		function audioplay(){
+			
+		
+			var n1 = document.getElementById("myAudio"+n)
+			n1.play()
+			n1.addEventListener('ended', function() {
+				n++
+				console.log(n)
+				audioplay()
+			
+				
+			})
+			
+		}
+		
+		function tiaozhuan(){
+			tzf = document.getElementById("tiaozhuanfen").value;
+			tzm = document.getElementById("tiaozhuanmiao").value;
+			
+			tz = Number(tzf)*60+ Number(tzm)
+			
+			document.getElementById("myAudio"+n).fastSeek(tz)
+		}
+		
+		
+		function audiopause(){
+			document.getElementById("myAudio"+n).pause()
+		}
+		
+		function getCurTime(){ 
+			var x = document.getElementById("myAudio"+n).currentTime;
+			document.getElementById("chang").innerHTML = x;
+		} 
+		
+		// function myFunction(){
+		// 	var x = document.getElementById("myAudio"+n).duration;
+		// 	document.getElementById("demo").innerHTML = x;
+		// }
+		
+		// -----------------------------
+		
+		
+		function myFunction(){
+		    var x = document.getElementById("myAudio"+n).duration;
+		    document.getElementById("demo").innerHTML = x;
+		    document.getElementById("span2").innerHTML = x;
+			
+			
+		}
+		
+		// 音频总长度
+		function zongchang(){
+		   
+			
+			//设定一个定时器，让时间可以每秒钟更新一次
+			var time = 0;
+			var timer = setInterval(function() {
+				var zongtime = document.getElementById("myAudio"+n).duration;
+				var m = Math.floor(zongtime / 60);
+				var s = Math.floor(zongtime % 60);
+				document.getElementById("span2").innerHTML = m + ':' + s ;
+				return zongtime;
+			}, 1000); //1000毫秒=1秒
+		}
+		
+		var son = document.getElementById('son')
+		console.log(son)
+		
+		// 当前音频播放时间
+		function dangqianchang(){
+			
+			//设定一个定时器，让时间可以每秒钟更新一次
+			var time = 0;
+			var timer = setInterval(function() {
+				var time = document.getElementById("myAudio"+n).currentTime;
+				// 
+				// num = Math.floor(400/time);
+				
+				// son.style.width = num+'px'
+				// 
+				var m = Math.floor(time / 60);
+				var s = Math.floor(time % 60);
+				document.getElementById("span1").innerHTML = m + ':' + s ;
+			}, 1000); //1000毫秒=1秒
+		} 
+		
+		
+		// 音频总长度和当前播放时长
+		function yinchang(){
+		   
+			
+			//设定一个定时器，让时间可以每秒钟更新一次
+			var zongtime = 0;
+			var time = 0;
+			var timer = setInterval(function() {
+				var zongtime = document.getElementById("myAudio"+n).duration;
+				var zm = Math.floor(zongtime / 60);
+				var zs = Math.floor(zongtime % 60);
+				document.getElementById("span2").innerHTML = zm + ':' + zs ;
+				
+				var time = document.getElementById("myAudio"+n).currentTime;
+				var m = Math.floor(time / 60);
+				var s = Math.floor(time % 60);
+				document.getElementById("span1").innerHTML = m + ':' + s ;
+				
+				num = Math.floor((400 / zongtime) * time);
+				
+				son.style.width = num+'px'
+				
+				
+			}, 1000); //1000毫秒=1秒
+		}
+		
+		
+		
+		// 当前音频播放时间
+		function dangqianchang(){
+			
+			//设定一个定时器，让时间可以每秒钟更新一次
+			var time = 0;
+			var timer = setInterval(function() {
+				var time = document.getElementById("myAudio"+n).currentTime;
+				// 
+				// num = Math.floor(400/time);
+				
+				// son.style.width = num+'px'
+				// 
+				var m = Math.floor(time / 60);
+				var s = Math.floor(time % 60);
+				document.getElementById("span1").innerHTML = m + ':' + s ;
+			}, 1000); //1000毫秒=1秒
+		} 
+		
+		
+		
+		
+		</script>
+		
+	</body>
+</html>
