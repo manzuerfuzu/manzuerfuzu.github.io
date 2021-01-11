@@ -129,9 +129,9 @@
 			 Bmob.User.login(document.getElementById("yonghuming").value,document.getElementById("email").value).then(res => {
 				// 登录成功后跳转页面
 				console.log('成功')
-				console.log(res)
-				window.localStorage.setItem('name',res);
-			   location.href = "page/cs.html";
+				// console.log(res)
+				
+			   location.href = "page/mp3player.html";
 			 }).catch(err => {
 			  console.log(err.error)
 			});
