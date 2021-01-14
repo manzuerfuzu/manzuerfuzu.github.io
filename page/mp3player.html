@@ -6,7 +6,7 @@
 		<meta charset="utf-8">
 		<title>课程播放</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="css/mui.css" rel="stylesheet" />
+		<!-- <link href="css/mui.css" rel="stylesheet" /> -->
 		
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		
@@ -87,19 +87,19 @@
 		
 		<h1 id="tishi">请在紫色输入框中输入密码,<br>再单击下面【确定】按钮加载播放列表</h1>
 		
-		<div id="audio"></div>
 		
-		<form action="">
+		
+		<div id="yincang" >
 		  <div class="group">
 		    <input type="text" name="kcmima" id="kcmima" value="" autofocus="autofocus" placeholder="请在此输入密码" autocomplete="off" required>
 		  </div>
 		
 		  <div class="submit">
-		    <input type="submit" class="submit-btn" value="确定"  onclick="chaxunmp3();cs()">
+		    <input type="submit" class="submit-btn" value="确定"  onclick="chaxunmp3();yincang()">
 		  </div>
-		</form>
+		</div>
 		
-		
+		<div id="audio"></div>
 		
 		
 		
@@ -118,11 +118,14 @@
 			
 			
 			
-			var mp3list = []
+			
 			
 			
 			
 			function chaxunmp3(){
+				
+				var mp3list = []
+				
 				 const query = Bmob.Query('mp3');
 				 query.get(document.getElementById("kcmima").value).then(res => {
 				   // console.log(res)
@@ -168,6 +171,13 @@
 				  console.log(res)
 				});
 			}
+			
+			function yincang() {
+				$("#yincang").hide()
+			}
+			
+			
+			
 			
 	
 		    // audioSrcFile,audioHttp,audioSrc,audioLic,addAuto必须传,audioBg,audioListBg可不传该属性
