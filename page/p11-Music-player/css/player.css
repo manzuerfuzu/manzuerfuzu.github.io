@@ -162,8 +162,8 @@
 
 .player-control__content {
 	/* width: 90%; */
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left: 15px;
+	margin-right: 15px;
     margin-bottom: 5px;
     /* overflow: hidden; */
 }
@@ -230,8 +230,8 @@
 }
 
 .progress .pointer {
-    width: 7px;
-    height: 7px;
+    width: 15px;
+    height: 15px;
     background: #fff;
     border-radius: 50%;
     opacity: 0;
