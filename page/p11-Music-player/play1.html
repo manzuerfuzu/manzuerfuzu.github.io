@@ -493,12 +493,12 @@
 		        let father = this.$el;
 		        let flag = false; //鼠标是否点击
 				// mousedown在移动端不兼容，所以用了touchstart-----------------
-		        ele.mousedown((e) => {
+		        ele.touchstart((e) => {
 		            flag = true;
 		            let mousePos = {
 		                x: e.offsetX
 		            }
-		            $(document).mousemove((e) => {
+		            $(document).touchmove((e) => {
 		                if (flag === true) {
 		                    let _left = e.clientX - father.offset().left - mousePos.x;
 		                    let _distance = Math.max(0, Math.min(_left, father.outerWidth(false) - ele.outerWidth(false)))
@@ -509,7 +509,7 @@
 		                }
 		            })
 		        })
-		        $(document).mouseup(() => {
+		        $(document).touchend(() => {
 		            flag = false;
 		        })
 		
