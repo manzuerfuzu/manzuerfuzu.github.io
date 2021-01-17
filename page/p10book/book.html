@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<title>cs</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="zi____yuan/bootstrap.min.css" rel="stylesheet" />
+		
+		<style>
+			#mima {
+				width: 100%;
+				height: 50px;
+				margin: 50px auto;
+			}
+			
+			#btn-mima {
+				/* width: 60px; */
+				height: 36px;
+				background-color: #EC971F
+			}
+			
+			
+			p {
+				font-size: 25px;
+				line-height: 50px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		
+		<input type="text" id="mima" value=""  />
+		<p>在上面输入框中输入课程编号</p>
+		<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
+		
+		<div id="wenzi"></div>
+		<div id="wenzi1"></div>
+		<div id="wenzi2"></div>
+		<div id="wenzidibu"></div>
+		
+		
+		
+		
+		<!-- <br><img src="" > <br><br>-->
+		
+
+		<script src="zi____yuan/jquery.slim.min.js"></script>		
+		<script src="zi____yuan/bootstrap.bundle.min.js"></script>
+		<script src="zi____yuan/bootstrap.min.js"></script>
+		<script src="zi____yuan/Bmob-2.2.5.min.js"></script>
+		
+		<script type="text/javascript">
+			Bmob.initialize("d120dedc62382103", "201068");
+			// Bmob.debug(true);  //上线后关闭
+			
+			
+			
+			function cxwenzi(){
+				wenzi.innerHTML = ''
+				wenzi1.innerHTML = ''
+				wenzi2.innerHTML = ''
+				
+				 const query = Bmob.Query('wenzi');
+				 var mima = document.getElementById("mima").value
+				 query.get(mima).then(res => {
+				   // console.log(res)
+				   console.log('成功')
+				   // 获取某列的数据
+				   // console.log(res.wenzi)
+				   var wenzi1 = document.getElementById('wenzi1');
+				   wenzi1.innerHTML = res.wenzi
+			  
+				 }).catch(err => {
+				   console.log(err)
+				 })
+				 
+				  
+			}
+			
+			
+			// 嵌套查询
+			function cxwenzi2(){
+				wenzi.innerHTML = ''
+				wenzi1.innerHTML = ''
+				wenzi2.innerHTML = ''
+				
+				 const query = Bmob.Query('wenzi');
+				 var mima = document.getElementById("mima").value
+				 query.get(mima).then(res => {
+				   // console.log(res)
+				   console.log('成功')
+				   // 获取某列的数据
+				   // console.log(res.wenzi)
+				   var wenzi1 = document.getElementById('wenzi1');
+				   wenzi1.innerHTML = res.wenzi
+				   
+				   query.get('bpWn444D').then(res => {
+				     // console.log(res)
+				     console.log('成功')
+				    
+				     var wenzidibu = document.getElementById('wenzidibu');
+				     wenzidibu.innerHTML = res.wenzi				
+				    
+				   }).catch(err => {
+				     console.log(err)
+				   })
+				  
+				 }).catch(err => {
+				   console.log(err)
+				 })
+				 
+				  
+			}
+			
+			
+			// 用户输入值需要用split转化的
+			
+			function cxwenzi1(){
+				wenzi.innerHTML = ''
+				wenzi1.innerHTML = ''
+				wenzi2.innerHTML = ''
+				
+				 const query = Bmob.Query('_Article');
+				 var mima = document.getElementById("mima").value
+				 
+				 // 判断mima中是否包含-
+				 reg = /-/
+				 // console.log(reg.test(mima))
+				 
+				 if(reg.test(mima)){
+					 var mimalist = mima.split('-')
+					 // console.log(mimalist)
+					 
+					 query.get(mimalist[0]).then(res => {
+					 
+					   // console.log(res.content)
+					   console.log('成功')
+					   var wenzi1 = document.getElementById('wenzi1');
+					   wenzi1.innerHTML = res.content
+					 }).catch(err => {
+					   console.log(err)
+					 })
+					 
+					 query.get(mimalist[1]).then(res => {
+					 
+					   // console.log(res.content)
+					   console.log('成功')
+					   var wenzi2 = document.getElementById('wenzi2');
+					   wenzi2.innerHTML = res.content
+					 }).catch(err => {
+					   console.log(err)
+					 })
+					 
+				 }else
+				 {
+					query.get(mima).then(res => {
+					
+					  console.log(res)
+					  console.log('成功')
+					  var wenzi = document.getElementById('wenzi')
+					  wenzi.innerHTML = res.content
+					}).catch(err => {
+					  console.log(err)
+					}) 
+				 }
+				 
+				 
+			}
+			
+			
+			
+		</script>
+	</body>
+
+</html>
