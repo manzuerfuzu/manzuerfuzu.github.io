@@ -124,6 +124,17 @@
 		    <div class="player__song--timeProgess totalTime">00:00</div>
 		</div>
 		
+		<!-- 移动端进度条 -->
+		
+		<!-- <div class="audio-by-all">
+		   <span class="audio-by-now"></span>
+		</div>
+		<div class="audio-by-text">
+			<span class="audio-by-text-now">00:00</span><span class="audio-by-text-all">00:00</span>
+		</div> -->
+		
+		
+		
         <!-- 歌曲列表 -->
         <div class="music-player__list">
             <ul class="music__list_content">
@@ -492,12 +503,17 @@
 		        let ele = this.$pointer;
 		        let father = this.$el;
 		        let flag = false; //鼠标是否点击
-		        ele.mousedown((e) => {
+				// mousedown在移动端不兼容，所以用了touchstart-----------------
+		        ele.on('touchstart',(e) => {
+				// ele.on("touchstart", function(e) {
+				// 	    e.preventDefault();
+				// ele.mousedown((e) => {
 		            flag = true;
 		            let mousePos = {
 		                x: e.offsetX
 		            }
-		            $(document).mousemove((e) => {
+					$(document).on('touchmove',(e) => {
+		            // $(document).mousemove((e) => {
 		                if (flag === true) {
 		                    let _left = e.clientX - father.offset().left - mousePos.x;
 		                    let _distance = Math.max(0, Math.min(_left, father.outerWidth(false) - ele.outerWidth(false)))
@@ -508,7 +524,8 @@
 		                }
 		            })
 		        })
-		        $(document).mouseup(() => {
+				$(document).on('touchend',(e) => {
+		        // $(document).mouseup(() => {
 		            flag = false;
 		        })
 		
@@ -547,6 +564,20 @@
 		    }
 		}
 		new Player();
+		
+		var audio = document.querySelector('.music-player__audio')
+		// -+-+-+-+-+-+-+-+-+-+-+-+-+-+
+					
+					// ++++++++++++++++++++++++++++++++
+					
+		$('.progress').on('click',function(event){
+			// console.log(event);
+			var offset = event.offsetX;
+			var current = offset/$(this).width() * audio.duration;
+			// console.log(current);
+			audio.currentTime = current;
+			
+		})
 	};	
 		
 		
