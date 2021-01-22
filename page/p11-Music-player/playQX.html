@@ -17,7 +17,7 @@
 	
 	<style type="text/css">
 		
-		#kcmima {
+		#kcmima,#username,#usermima {
 			margin: 20px;
 			background-color: #ac4de2;
 			width: 80%;
@@ -36,7 +36,7 @@
 			
 		}
 		
-		#btn-cx{
+		#btn-cx, #user-mima{
 			border: 2px solid #ac4de2;
 			border-radius:25px;
 			width: 150px;
@@ -49,8 +49,25 @@
 			margin:0 auto
 		}
 		
-		#tishi{
+		#bianma-mima {
+			border: 2px solid #ac4de2;
+			border-radius:25px;
+			/* width: 150px;
+			height: 50px; */
+			font-size: 16px;
+			/* text-align: center; */
+			background-color: #FFFF00;
+			color:#ac4de2;
+			display:block;
+		}
+		
+		#tishi, #yincang-cx p {
 			margin: 20px;
+			text-align: center;
+			color: #F8F8FF;
+		}
+		
+		.chaxun_li {
 			text-align: center;
 			color: #F8F8FF;
 		}
@@ -59,19 +76,40 @@
 </head>
 <body>
 	
-	
-	<div id="yincang" >
-	  <h1 id="tishi">请在紫色输入框中输入课程编码,<br>再单击下面【确定】按钮加载播放列表</h1>
-	  <div class="group">
+	<div id="yincang-cx" >
+		<input type="text" id="username" value="" placeholder="在此输入用户名" />
+		<input type="text" id="usermima" value="" placeholder="在此输入密码" />
+		<p>在上面输入框中分别输入用户名与密码</p>
+		<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
 		
-	    <input type="text" name="kcmima" id="kcmima" value="" autofocus="autofocus" placeholder="请在此输入课程编码" autocomplete="off" />
-	  </div>
-	
-	  <div >
-		  <button type="button" id="btn-cx" onclick="cx();yincang()">确定</button>
-	    
-	  </div>
+		<div id="user-jiazaiTS" style="color: #DC3545;"></div>
+		<div id="user-shuchu">
+			<!-- 查询列表 -->
+			<div class="chaxun__list">
+				<ul class="chaxun_content">
+					<li class="chaxun_li"></li>	
+				</ul>
+			</div>
+		</div>
+		
+		<button type="button" id="bianma-mima" onclick="bianmashow()" >按课程编码查询</button>
+		
+		<div id="yincang" style="display:none;">
+		  <h1 id="tishi">请在紫色输入框中输入课程编码,<br>再单击下面【确定】按钮加载播放列表</h1>
+		  <div class="group">
+			
+		    <input type="text" name="kcmima" id="kcmima" value="" autofocus="autofocus" placeholder="请在此输入课程编码" autocomplete="off" />
+		  </div>
+		
+		  <div >
+			  <button type="button" id="btn-cx" onclick="cx();">确定</button>
+		    
+		  </div>
+		</div>
+		
 	</div>
+	
+
 	
     <!-- 播放器 -->
     <div class="music-player">
@@ -166,7 +204,96 @@
 		// Bmob.debug(true);  //上线后关闭
 		
 		
+		
+		// ------------ 用户权限 -----------------------
+		function userquanxian(){
+			
+			$('#user-jiazaiTS').html('查询中，稍等一下下！')
+			
+			var username = $("#username").val();
+			var usermima = $("#usermima").val();
+			
+			 Bmob.User.login(username,usermima).then(res => {
+				// 登录成功后跳转页面
+				console.log('成功')
+				$('#user-jiazaiTS').html('查询完成,点击下列课程题目即可打开')
+				// console.log(res)
+				console.log(res.quanxian)
+				console.log(res.quanxian_mima)
+				console.log(res.mp3QXheMM)
+				// $("#user-shuchu").text(res.QXheMM)
+				
+				//生成播放列表
+				
+					let _str = '';
+					res.mp3QXheMM.forEach((list, i) => {
+						// console.log(list)
+						// console.log(i)
+						var splitlist = list.split(':')
+						console.log(splitlist)
+						// _str += `<li class="chaxun__list__item">${song.title}</li>`
+						_str += `<li class="chaxun_li" id=${splitlist[1]}>${splitlist[0]}</li>`
+					});
+					$(".chaxun_content").html(_str);
+				
+				
+			   // location.href = "page/mp3player.html";
+			 }).catch(err => {
+			  console.log(err.error)
+			});
+		}
+		
+		// *************** 用户权限 end ************************
+		
+		
+		// ------------------ li点击打开 ------------------------------
+		
+		// $(".chaxun_li").click(function(){ 
+		// 	console.log(this.attr("id"))
+		// });
+		
 		var songlist = [];
+		
+		$('.chaxun_content').on('click','li',function(){
+			console.log($(this).attr("id"))
+			var mima = $(this).attr("id")
+			
+			$('#jiazaiTS').html('加载中，稍等一下下！')
+			songlist = [];
+			 
+			 const query = Bmob.Query('mp3');
+			 query.get(mima).then(res => {
+			   // console.log(res)
+			   console.log('成功')
+			   $('#jiazaiTS').html('加载完成！')
+			   yincangCX()
+			   // 获取mp3这列的数据
+			   // console.log(res.mp3)
+			  
+			   // console.log(res.mp3name)
+			   console.log(res.wenzi)
+			   songlist = eval('(' + res.wenzi + ')');
+			   
+			   psAudio(songlist);
+			   
+			   // body.innerHTML = res.code
+			 		  
+			 }).catch(err => {
+			   console.log(err)
+			 })
+		})
+		
+		// ******************** li点击打开 end *************************
+		
+		
+		
+		
+		
+		
+		
+		// 音频播放---------------------------------------------------
+		
+		
 		
 		function cx(){
 			
@@ -174,6 +301,7 @@
 			 query.get(document.getElementById("kcmima").value).then(res => {
 			   // console.log(res)
 			   console.log('成功')
+			   yincangCX()
 			   // 获取mp3这列的数据
 			   // console.log(res.mp3)
 			  
@@ -194,6 +322,14 @@
 		
 		function yincang() {
 			$("#yincang").hide()
+		}
+		
+		function bianmashow() {
+			$("#yincang").show()
+		}
+		
+		function yincangCX() {
+			$("#yincang-cx").hide()
 		}
 		
 	window.psAudio = function(arr){

@@ -3,9 +3,14 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>cs</title>
+		<title>book</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<link href="zi____yuan/bootstrap.min.css" rel="stylesheet" />
+		<link href="../zi____yuan/bootstrap.min.css" rel="stylesheet" />
+		<script src="../zi____yuan/jquery.slim.min.js"></script>
+		<script src="../zi____yuan/bootstrap.bundle.min.js"></script>
+		<script src="../zi____yuan/bootstrap.min.js"></script>
+		<script src="../zi____yuan/Bmob-2.2.5.min.js"></script>
+		<script src="../zi____yuan/fastclick.js"></script>
 		
 		<style>
 			#mima {
@@ -31,10 +36,26 @@
 
 	<body>
 		
+		<input type="text" id="username" value="" placeholder="在此输入用户名" />
+		<input type="text" id="usermima" value="" placeholder="在此输入密码" />
+		<p>在上面输入框中分别输入用户名与密码</p>
+		<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
+		
+		<div id="user-jiazaiTS" style="color: #DC3545;"></div>
+		<div id="user-shuchu">
+			<!-- 查询列表 -->
+			<div class="chaxun__list">
+				<ul class="chaxun_content">
+					<li class="chaxun_li"></li>	
+				</ul>
+			</div>
+		</div>
+		
 		<input type="text" id="mima" value=""  />
 		<p>在上面输入框中输入课程编号</p>
 		<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
 		
+		<div id="jiazaiTS" style="color: #DC3545;"></div>
 		<div id="wenzi"></div>
 		<div id="wenzi1"></div>
 		<div id="wenzi2"></div>
@@ -46,18 +67,102 @@
 		<!-- <br><img src="" > <br><br>-->
 		
 
-		<script src="zi____yuan/jquery.slim.min.js"></script>		
-		<script src="zi____yuan/bootstrap.bundle.min.js"></script>
-		<script src="zi____yuan/bootstrap.min.js"></script>
-		<script src="zi____yuan/Bmob-2.2.5.min.js"></script>
+
 		
 		<script type="text/javascript">
+			
+			if ('addEventListener' in document) {
+				document.addEventListener('DOMContentLoaded', function() {
+					FastClick.attach(document.body);
+				}, false);
+			}
+			
+			$(function() {
+				FastClick.attach(document.body);
+			});
+			
 			Bmob.initialize("d120dedc62382103", "201068");
 			// Bmob.debug(true);  //上线后关闭
 			
+			// ------------ 用户权限 -----------------------
+			function userquanxian(){
+				
+				$('#user-jiazaiTS').html('查询中，稍等一下下！')
+				
+				var username = $("#username").val();
+				var usermima = $("#usermima").val();
+				
+				 Bmob.User.login(username,usermima).then(res => {
+					// 登录成功后跳转页面
+					console.log('成功')
+					$('#user-jiazaiTS').html('查询完成,点击下列课程题目即可打开')
+					// console.log(res)
+					console.log(res.quanxian)
+					console.log(res.quanxian_mima)
+					console.log(res.QXheMM)
+					// $("#user-shuchu").text(res.QXheMM)
+					
+					//生成播放列表
+					
+						let _str = '';
+						res.QXheMM.forEach((list, i) => {
+							// console.log(list)
+							// console.log(i)
+							var splitlist = list.split(':')
+							console.log(splitlist)
+							// _str += `<li class="chaxun__list__item">${song.title}</li>`
+							_str += `<li class="chaxun_li" id=${splitlist[1]}>${splitlist[0]}</li>`
+						});
+						$(".chaxun_content").html(_str);
+					
+					
+				   // location.href = "page/mp3player.html";
+				 }).catch(err => {
+				  console.log(err.error)
+				});
+			}
 			
+			// *************** 用户权限 end ************************
+			
+			
+			// ------------------ li点击打开 ------------------------------
+			
+			// $(".chaxun_li").click(function(){ 
+			// 	console.log(this.attr("id"))
+			// });
+			
+			$('.chaxun_content').on('click','li',function(){
+				console.log($(this).attr("id"))
+				var mima = $(this).attr("id")
+				
+				$('#jiazaiTS').html('加载中，稍等一下下！')
+				
+				wenzi.innerHTML = ''
+				wenzi1.innerHTML = ''
+				wenzi2.innerHTML = ''
+				
+				 const query = Bmob.Query('wenzi');
+				 
+				 query.get(mima).then(res => {
+				   // console.log(res)
+				   console.log('成功')
+				   $('#jiazaiTS').html('加载完成！')
+				   // 获取某列的数据
+				   // console.log(res.wenzi)
+				   var wenzi1 = document.getElementById('wenzi1');
+				   wenzi1.innerHTML = res.wenzi
+							  
+				 }).catch(err => {
+				   console.log(err)
+				 })
+			})
+			
+			// ******************** li点击打开 end *************************
 			
 			function cxwenzi(){
+				
+				$('#jiazaiTS').html('加载中，稍等一下下！')
+				
 				wenzi.innerHTML = ''
 				wenzi1.innerHTML = ''
 				wenzi2.innerHTML = ''
@@ -67,6 +172,7 @@
 				 query.get(mima).then(res => {
 				   // console.log(res)
 				   console.log('成功')
+				   $('#jiazaiTS').html('加载完成！')
 				   // 获取某列的数据
 				   // console.log(res.wenzi)
 				   var wenzi1 = document.getElementById('wenzi1');
