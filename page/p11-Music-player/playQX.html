@@ -17,9 +17,37 @@
 	
 	<style type="text/css">
 		
+		body {
+			color: #FFFFFF;
+		}
+		
+		input::-webkit-input-placeholder { /* WebKit, Blink, Edge */    color:    #FFFFFF; }
+		input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */   color:    #FFFFFF; }
+		input::-moz-placeholder { /* Mozilla Firefox 19+ */   color:    #FFFFFF; }
+		input:-ms-input-placeholder { /* Internet Explorer 10-11 */   color:    #FFFFFF; }
 		
 		
-		#kcmima,#username,#usermima {
+		#username,#usermima {
+			
+			background-color: #ac4de2;
+			width: 80%;
+			width: calc(100% - 180px);
+			height: 64px;
+			border-radius: 2px;
+			border: 0;
+			font-size: 14px;
+			padding-left: 32px;
+			padding-right: 32px;
+			outline: 0px none;
+			outline: 0px;
+			color: #ffffff;
+			display:block;
+			margin:20px auto
+			
+			
+		}
+		
+		#kcmima {
 			margin: 20px;
 			background-color: #ac4de2;
 			width: 80%;
@@ -48,7 +76,7 @@
 			background-color: #FFFF00;
 			color:#ac4de2;
 			display:block;
-			margin:0 auto
+			margin:15px auto
 		}
 		
 		#bianma-mima {
@@ -67,6 +95,7 @@
 			margin: 20px;
 			text-align: center;
 			color: #F8F8FF;
+			font-size: 16px;
 		}
 		
 		.chaxun_li {
@@ -106,8 +135,10 @@
 	
 	
 	<div id="yincang-cx" >
-		<input type="text" id="username" value="" placeholder="在此输入用户名" />
-		<input type="text" id="usermima" value="" placeholder="在此输入密码" />
+		<input type="text" id="username" value="" placeholder="用户名"/>
+
+		<input type="password" id="usermima" value=""placeholder="密码" />
+
 		<p>在上面输入框中分别输入用户名与密码</p>
 		<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
 		
@@ -116,7 +147,7 @@
 			<!-- 查询列表 -->
 			<div class="chaxun__list">
 				<ul class="chaxun_content">
-					<li class="chaxun_li"></li>	
+					
 				</ul>
 			</div>
 		</div>
@@ -247,11 +278,13 @@
 			 Bmob.User.login(username,usermima).then(res => {
 				// 登录成功后跳转页面
 				console.log('成功')
+				// $("#username").val() = ''
+				// $("#usermima").val() = ''
 				$('#user-jiazaiTS').html('查询完成,点击下列课程题目即可打开')
 				// console.log(res)
-				console.log(res.quanxian)
-				console.log(res.quanxian_mima)
-				console.log(res.mp3QXheMM)
+				// console.log(res.quanxian)
+				// console.log(res.quanxian_mima)
+				// console.log(res.mp3QXheMM)
 				// $("#user-shuchu").text(res.QXheMM)
 				
 				//生成播放列表
@@ -261,7 +294,7 @@
 						// console.log(list)
 						// console.log(i)
 						var splitlist = list.split(':')
-						console.log(splitlist)
+						// console.log(splitlist)
 						// _str += `<li class="chaxun__list__item">${song.title}</li>`
 						_str += `<li class="chaxun_li" id=${splitlist[1]}>${splitlist[0]}</li>`
 					});
@@ -286,7 +319,7 @@
 		var songlist = [];
 		
 		$('.chaxun_content').on('click','li',function(){
-			console.log($(this).attr("id"))
+			// console.log($(this).attr("id"))
 			var mima = $(this).attr("id")
 			
 			$('#jiazaiTS').html('加载中，稍等一下下！')
@@ -302,7 +335,7 @@
 			   // console.log(res.mp3)
 			  
 			   // console.log(res.mp3name)
-			   console.log(res.wenzi)
+			   // console.log(res.wenzi)
 			   songlist = eval('(' + res.wenzi + ')');
 			   
 			   psAudio(songlist);

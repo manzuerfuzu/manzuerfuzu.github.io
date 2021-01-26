@@ -72,6 +72,10 @@
 				font-size: 16px;
 			}
 			
+			img {
+				width: 100%;
+			}
+			
 			
 		</style>
 	</head>
@@ -86,8 +90,8 @@
 		<div id="content">
 			
 		
-			<input type="text" id="username" value="" placeholder="在此输入用户名" />
-			<input type="text" id="usermima" value="" placeholder="在此输入密码" />
+			<input type="text" id="username" value="" placeholder="用户名" />
+			<input type="password" id="usermima" value="" placeholder="密码" />
 			<p class="p1">在上面输入框中分别输入用户名与密码</p>
 			<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
 			
@@ -96,16 +100,19 @@
 				<!-- 查询列表 -->
 				<div class="chaxun__list">
 					<ul class="chaxun_content">
-						<li class="chaxun_li"></li>	
+						
 					</ul>
 				</div>
 			</div>
 			
-			<input type="text" id="mima" value=""  />
-			<p class="p1">在上面输入框中输入课程编号</p>
-			<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
+			<button type="button" id="bianma-mima" onclick="bianmashow()" >按课程编码查询</button>
+			<div id="yincang" style="display:none;">
+				<input type="text" id="mima" value=""  />
+				<p class="p1">在上面输入框中输入课程编号</p>
+				<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
+				<div id="jiazaiTS" style="color: #DC3545;"></div>
+			</div>	
 			
-			<div id="jiazaiTS" style="color: #DC3545;"></div>
 			<div id="wenzi"></div>
 			<div id="wenzi1"></div>
 			<div id="wenzi2"></div>
@@ -145,11 +152,13 @@
 				 Bmob.User.login(username,usermima).then(res => {
 					// 登录成功后跳转页面
 					console.log('成功')
+					// $("#username").val() = ''
+					// $("#usermima").val() = ''
 					$('#user-jiazaiTS').html('查询完成,点击下列课程题目即可打开')
 					// console.log(res)
-					console.log(res.quanxian)
-					console.log(res.quanxian_mima)
-					console.log(res.QXheMM)
+					// console.log(res.quanxian)
+					// console.log(res.quanxian_mima)
+					// console.log(res.QXheMM)
 					// $("#user-shuchu").text(res.QXheMM)
 					
 					//生成播放列表
@@ -159,7 +168,7 @@
 							// console.log(list)
 							// console.log(i)
 							var splitlist = list.split(':')
-							console.log(splitlist)
+							// console.log(splitlist)
 							// _str += `<li class="chaxun__list__item">${song.title}</li>`
 							_str += `<li class="chaxun_li" id=${splitlist[1]}>${splitlist[0]}</li>`
 						});
@@ -182,7 +191,7 @@
 			// });
 			
 			$('.chaxun_content').on('click','li',function(){
-				console.log($(this).attr("id"))
+				// console.log($(this).attr("id"))
 				var mima = $(this).attr("id")
 				
 				$('#jiazaiTS').html('加载中，稍等一下下！')
@@ -323,6 +332,10 @@
 				 }
 				 
 				 
+			}
+			
+			function bianmashow() {
+				$("#yincang").show()
 			}
 			
 			
