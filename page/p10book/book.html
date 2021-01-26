@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8">
-		<title>book</title>
+		<title>【book】满足而富足-净心</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../zi____yuan/bootstrap.min.css" rel="stylesheet" />
 		<script src="../zi____yuan/jquery.slim.min.js"></script>
@@ -13,55 +13,105 @@
 		<script src="../zi____yuan/fastclick.js"></script>
 		
 		<style>
+			
+			body{
+				background-color: #FFE4E1;
+				margin: 25px 25px;
+			}
+			
+			#username,#usermima{
+				width: 40%;
+				height: 50px;
+				padding: 30px;
+				margin-left: 5%;
+			}
+			
 			#mima {
 				width: 100%;
 				height: 50px;
-				margin: 50px auto;
+				margin: 30px auto 15px;
+				padding: 30px;
 			}
 			
-			#btn-mima {
-				/* width: 60px; */
+			#btn-mima, #user-mima {
+				width: 100px; 
 				height: 36px;
-				background-color: #EC971F
+				background-color: #EC971F;
+				display: block;
+				margin: 0 auto;
 			}
 			
 			
 			p {
 				font-size: 25px;
 				line-height: 50px;
+				color: #4B0082;
 			}
+			
+			.p1 {
+				color: #4B0082;
+				font-size: 20px;
+				text-align: center;
+			}
+			
+			#me{
+				/* position: relative ; */
+				margin-top: 15px;
+				margin-bottom: 15px;
+				
+			}
+			
+			#me h5 {
+				text-align: center;
+				color: #A9A9A9;
+				font-size: 16px;
+			}
+			
+			#me h5 span {
+				color: #8A2BE2;
+				font-size: 16px;
+			}
+			
 			
 		</style>
 	</head>
 
 	<body>
 		
-		<input type="text" id="username" value="" placeholder="在此输入用户名" />
-		<input type="text" id="usermima" value="" placeholder="在此输入密码" />
-		<p>在上面输入框中分别输入用户名与密码</p>
-		<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
-		
-		<div id="user-jiazaiTS" style="color: #DC3545;"></div>
-		<div id="user-shuchu">
-			<!-- 查询列表 -->
-			<div class="chaxun__list">
-				<ul class="chaxun_content">
-					<li class="chaxun_li"></li>	
-				</ul>
-			</div>
+		<div id="me">
+			<h5 >制作: <span>满足而富足-净心</span></h5>
+			<h5 >微信号: <span>2926027350</span></h5>
 		</div>
 		
-		<input type="text" id="mima" value=""  />
-		<p>在上面输入框中输入课程编号</p>
-		<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
+		<div id="content">
+			
 		
-		<div id="jiazaiTS" style="color: #DC3545;"></div>
-		<div id="wenzi"></div>
-		<div id="wenzi1"></div>
-		<div id="wenzi2"></div>
-		<div id="wenzidibu"></div>
+			<input type="text" id="username" value="" placeholder="在此输入用户名" />
+			<input type="text" id="usermima" value="" placeholder="在此输入密码" />
+			<p class="p1">在上面输入框中分别输入用户名与密码</p>
+			<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
+			
+			<div id="user-jiazaiTS" style="color: #DC3545;"></div>
+			<div id="user-shuchu">
+				<!-- 查询列表 -->
+				<div class="chaxun__list">
+					<ul class="chaxun_content">
+						<li class="chaxun_li"></li>	
+					</ul>
+				</div>
+			</div>
+			
+			<input type="text" id="mima" value=""  />
+			<p class="p1">在上面输入框中输入课程编号</p>
+			<button type="button" id="btn-mima" onclick="cxwenzi()">确定</button>
+			
+			<div id="jiazaiTS" style="color: #DC3545;"></div>
+			<div id="wenzi"></div>
+			<div id="wenzi1"></div>
+			<div id="wenzi2"></div>
+			<div id="wenzidibu"></div>
 		
-		
+		</div>
 		
 		
 		<!-- <br><img src="" > <br><br>-->
