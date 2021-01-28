@@ -1,0 +1,38 @@
+{
+    "pages": [
+        "pages/book/book",
+        "pages/mp3play/mp3play",
+        "pages/denglu/denglu",
+        "pages/login/login",
+        "pages/index/index",
+        "pages/web-view/web-view"
+    ],
+    "subPackages": [],
+    "window": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uni-app",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "color": "#FFFFFF",
+        "selectedColor": "#FFFF00",
+        "backgroundColor": "#9400D3",
+        "list": [
+            {
+                "text": "首页",
+                "pagePath": "pages/index/index",
+                "iconPath": "static/首页1.png",
+                "selectedIconPath": "static/首页3.png"
+            },
+            {
+                "text": "登录",
+                "pagePath": "pages/denglu/denglu",
+                "iconPath": "static/信息3.png",
+                "selectedIconPath": "static/信息2.png"
+            }
+        ]
+    },
+    "usingComponents": {},
+    "sitemapLocation": "sitemap71.json"
+}
