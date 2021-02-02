@@ -76,6 +76,17 @@
 				width: 100%;
 			}
 			
+			.zhiding {
+				background-color: #ff443f;
+				border:1px solid #ffdc00;
+				border-radius: 30%;
+				color: #F5F5F5;
+				position: fixed;
+				bottom:0;
+				right: 0;
+				z-index: 2000;
+			}
+			
 			
 		</style>
 	</head>
@@ -87,6 +98,8 @@
 			<h5 >微信号: <span>2926027350</span></h5>
 		</div>
 		
+		<button type="button" onclick="wxdenglu()" >微信登录</button>
+		
 		<div id="content">
 			
 		
@@ -95,6 +108,7 @@
 			<p class="p1">在上面输入框中分别输入用户名与密码</p>
 			<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
 			
+			<!-- 各期列表 -->
 			<div id="user-jiazaiTS" style="color: #DC3545;"></div>
 			<div id="user-shuchu">
 				<!-- 查询列表 -->
@@ -104,6 +118,20 @@
 					</ul>
 				</div>
 			</div>
+			
+			<!-- 一期列表 -->
+			
+			<div id="user-jiazaiTS1" style="color: #DC3545;"></div>
+			<div id="yiqi-shuchu">
+				<!-- 查询列表 -->
+				<div class="chaxun__list1">
+					<ul class="chaxun_content1">
+						
+					</ul>
+				</div>
+			</div>
+			
+			
 			
 			<button type="button" id="bianma-mima" onclick="bianmashow()" >按课程编码查询</button>
 			<div id="yincang" style="display:none;">
@@ -118,6 +146,10 @@
 			<div id="wenzi2"></div>
 			<div id="wenzidibu"></div>
 		
+		</div>
+		
+		<div class="zhiding" >
+			<a href="#">回到顶部</a>
 		</div>
 		
 		
@@ -141,7 +173,14 @@
 			Bmob.initialize("d120dedc62382103", "201068");
 			// Bmob.debug(true);  //上线后关闭
 			
-			// ------------ 用户权限 -----------------------
+			
+			
+			
+			
+			
+			
+		
+			
 			function userquanxian(){
 				
 				$('#user-jiazaiTS').html('查询中，稍等一下下！')
@@ -154,23 +193,17 @@
 					console.log('成功')
 					// $("#username").val() = ''
 					// $("#usermima").val() = ''
-					$('#user-jiazaiTS').html('查询完成,点击下列课程题目即可打开')
+					$('#user-jiazaiTS').html('查询完成,点击下列标题,选择需要哪期课程')
 					// console.log(res)
-					// console.log(res.quanxian)
-					// console.log(res.quanxian_mima)
-					// console.log(res.QXheMM)
-					// $("#user-shuchu").text(res.QXheMM)
+					// console.log('res.unibookQ为：-----------------')
+					// console.log(res.unibookQx)
 					
-					//生成播放列表
+					// //生成各期列表
 					
 						let _str = '';
-						res.QXheMM.forEach((list, i) => {
-							// console.log(list)
-							// console.log(i)
-							var splitlist = list.split(':')
-							// console.log(splitlist)
-							// _str += `<li class="chaxun__list__item">${song.title}</li>`
-							_str += `<li class="chaxun_li" id=${splitlist[1]}>${splitlist[0]}</li>`
+						res.unibookQx.forEach((list, i) => {
+							
+							_str += `<li class="chaxun_li" id=${list.key}>${list.name}</li>`
 						});
 						$(".chaxun_content").html(_str);
 					
@@ -183,6 +216,42 @@
 			
 			// *************** 用户权限 end ************************
 			
+			// 一期查询
+			
+			$('.chaxun_content').on('click','li',function(){
+				// console.log($(this).attr("id"))
+				var mima = $(this).attr("id")
+				
+				$('#jiazaiTS1').html('加载中，稍等一下下！')
+				
+				// wenzi.innerHTML = ''
+				// wenzi1.innerHTML = ''
+				// wenzi2.innerHTML = ''
+				
+				 const query = Bmob.Query('book');
+				 
+				 query.get(mima).then(res => {
+				   console.log(res.book)
+				   console.log('成功')
+				   
+				   $('#jiazaiTS1').html('加载完成！')
+				   // //生成1期列表
+				   
+				   	let _str = '';
+				   	res.book.forEach((list, i) => {
+				   		console.log(list.key)
+				   		console.log(list.name)
+				   		_str += `<li class="chaxun_li" id=${list.key}>${list.name}</li>`
+				   	});
+				   	$(".chaxun_content1").html(_str);
+					$('#user-jiazaiTS1').html('查询完成,点击下列课程题目即可打开')
+							  
+				 }).catch(err => {
+				   console.log(err)
+				 })
+			})
+			
+			// 一期查询end
 			
 			// ------------------ li点击打开 ------------------------------
 			
@@ -190,7 +259,7 @@
 			// 	console.log(this.attr("id"))
 			// });
 			
-			$('.chaxun_content').on('click','li',function(){
+			$('.chaxun_content1').on('click','li',function(){
 				// console.log($(this).attr("id"))
 				var mima = $(this).attr("id")
 				
