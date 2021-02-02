@@ -87,6 +87,19 @@
 				z-index: 2000;
 			}
 			
+			#yjdl {
+				border: 2px solid #ac4de2;
+				border-radius:25px;
+				/* width: 150px;
+				height: 50px; */
+				font-size: 16px;
+				/* text-align: center; */
+				background-color: #FFFF00;
+				color:#ac4de2;
+				display:block;
+				margin-bottom: 15px;
+			}
+			
 			
 		</style>
 	</head>
@@ -98,7 +111,7 @@
 			<h5 >微信号: <span>2926027350</span></h5>
 		</div>
 		
-		<button type="button" onclick="wxdenglu()" >微信登录</button>
+		<button id="yjdl" type="button" onclick="cxdl()">一键登录</button>
 		
 		<div id="content">
 			
@@ -153,7 +166,7 @@
 		</div>
 		
 		
-		<!-- <br><img src="" > <br><br>-->
+		
 		
 
 
@@ -408,6 +421,37 @@
 			}
 			
 			
+			function cxdl(){
+				let current = Bmob.User.current()
+				$('#user-jiazaiTS').html('查询中，稍等一下下！')
+				
+				const query = Bmob.Query('_User');
+				
+				query.get(current.objectId).then(res => {
+				  // console.log(res)
+				  console.log('成功')
+				  console.log(res.unibookQx)
+				
+				 
+				  
+						$('#user-jiazaiTS').html('查询完成,点击下列标题,选择需要哪期课程')
+					
+						// //生成各期列表
+						
+							let _str = '';
+							res.unibookQx.forEach((list, i) => {
+								
+								_str += `<li class="chaxun_li" id=${list.key}>${list.name}</li>`
+							});
+							$(".chaxun_content").html(_str);
+						
+						
+					   // location.href = "page/mp3player.html";
+					 }).catch(err => {
+					  console.log(err.error)
+					});
+			
+			}
 			
 		</script>
 	</body>
