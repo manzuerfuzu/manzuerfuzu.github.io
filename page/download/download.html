@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<title>【book】满足而富足-净心</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../zi____yuan/bootstrap.min.css" rel="stylesheet" />
+		<script src="../zi____yuan/jquery.slim.min.js"></script>
+		<script src="../zi____yuan/bootstrap.bundle.min.js"></script>
+		<script src="../zi____yuan/bootstrap.min.js"></script>
+		<script src="../zi____yuan/Bmob-2.2.5.min.js"></script>
+		<script src="../zi____yuan/fastclick.js"></script>
+		
+		<style>
+			
+			body{
+				background-color: #DDA0DD;
+				/* background-image: url('https://vkceyugu.cdn.bspapp.com/VKCEYUGU-40824f1d-eece-4c7a-a974-086a4b9cb863/f37816db-ff8f-44db-941f-98966b4fb455.jpg') ; */
+				margin: 25px 25px;
+			}
+			
+			#username,#usermima{
+				width: 40%;
+				height: 50px;
+				padding: 30px;
+				margin-left: 5%;
+			}
+			
+			#mima {
+				width: 100%;
+				height: 50px;
+				margin: 30px auto 15px;
+				padding: 30px;
+			}
+			
+			#btn-mima, #user-mima {
+				width: 100px; 
+				height: 36px;
+				background-color: #EC971F;
+				display: block;
+				margin: 0 auto;
+			}
+			
+			
+			p {
+				font-size: 25px;
+				line-height: 50px;
+				color: #4B0082;
+			}
+			
+			.p1 {
+				color: #4B0082;
+				font-size: 20px;
+				text-align: center;
+			}
+			
+			#me{
+				/* position: relative ; */
+				margin-top: 15px;
+				margin-bottom: 15px;
+				
+			}
+			
+			#me h5 {
+				text-align: center;
+				color: #A9A9A9;
+				font-size: 16px;
+			}
+			
+			#me h5 span {
+				color: #8A2BE2;
+				font-size: 16px;
+			}
+			
+			img {
+				width: 100%;
+			}
+			
+			.zhiding {
+				background-color: #ffdc00;
+				border:1px solid #ff443f;
+				border-radius: 30%;
+				color: #F5F5F5;
+				position: fixed;
+				bottom:0;
+				right: 0;
+				z-index: 2000;
+			}
+			
+			#yjdl {
+				border: 2px solid #ac4de2;
+				border-radius:25px;
+				/* width: 150px;
+				height: 50px; */
+				font-size: 16px;
+				/* text-align: center; */
+				background-color: #FFFF00;
+				color:#ac4de2;
+				display:block;
+				margin-bottom: 15px;
+			}
+			
+			
+		</style>
+	</head>
+
+	<body>
+		
+		<div id="me">
+			<h5 >制作: <span>满足而富足-净心</span></h5>
+			<h5 >微信号: <span>2926027350</span></h5>
+		</div>
+		
+		<button id="yjdl" type="button" onclick="cxdl()">一键登录</button>
+		
+		<div id="content">
+			
+		
+			<input type="text" id="username" value="" placeholder="用户名" />
+			<input type="password" id="usermima" value="" placeholder="密码" />
+			<p class="p1">在上面输入框中分别输入用户名与密码</p>
+			<button type="button" id="user-mima" onclick="userquanxian()">确定</button>
+			
+			
+			<div id="user-jiazaiTS" style="color: #DC3545;"></div>
+			<div id="user-shuchu">
+				<!-- 查询列表 -->
+				<div class="chaxun__list">
+					<ul class="chaxun_content">
+						
+					</ul>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+		
+		</div>
+		
+		<div class="zhiding" >
+			<a href="#">回到顶部</a>
+		</div>
+		
+		
+		
+		
+
+
+		
+		<script type="text/javascript">
+			
+			if ('addEventListener' in document) {
+				document.addEventListener('DOMContentLoaded', function() {
+					FastClick.attach(document.body);
+				}, false);
+			}
+			
+			$(function() {
+				FastClick.attach(document.body);
+			});
+			
+			Bmob.initialize("d120dedc62382103", "201068");
+			// Bmob.debug(true);  //上线后关闭
+			
+			
+			
+			
+			
+			
+			
+		
+			
+			function userquanxian(){
+				
+				$('#user-jiazaiTS').html('查询中，稍等一下下！')
+				
+				var username = $("#username").val();
+				var usermima = $("#usermima").val();
+				
+				 Bmob.User.login(username,usermima).then(res => {
+					// 登录成功后跳转页面
+					console.log('成功')
+					// $("#username").val() = ''
+					// $("#usermima").val() = ''
+					// $('#user-jiazaiTS').html('查询完成')
+					// console.log(res)
+					// console.log('res.unibookQ为：-----------------')
+					// console.log(res.xiazaiQx)
+					
+					const query = Bmob.Query('xiazai');
+					
+					query.get(res.xiazaiQx).then(res => {
+					  console.log(res.xiazai)
+					  console.log('成功')
+					  
+					  $('#jiazaiTS').html('查询完成！')
+					  // //生成1期列表
+					  
+					  	let _str = '';
+					  	res.xiazai.forEach((list, i) => {
+					  		// console.log(list.key)
+					  		// console.log(list.name)
+					  		_str += `<li class="chaxun_li" >${list.name}<br>微云音频${list.wymp3url}<br>百度云音频${list.bdymp3url}<br>微云文字${list.wybookurl}<br>百度云文字${list.bdybookurl}</li>`
+					  	});
+					  	$(".chaxun_content").html(_str);
+										// $('#user-jiazaiTS1').html('查询完成,点击下列课程题目即可打开')
+												  
+					}).catch(err => {
+					  console.log(err)
+					})
+					
+					
+				 }).catch(err => {
+				  console.log(err.error)
+				});
+			}
+			
+			// *************** 用户权限 end ************************
+			
+			
+			
+			
+			
+			function cxdl(){
+				let current = Bmob.User.current()
+				$('#user-jiazaiTS').html('查询中，稍等一下下！')
+				
+				const query = Bmob.Query('_User');
+				
+				query.get(current.objectId).then(res => {
+				  // console.log(res)
+				  console.log('成功')
+				  console.log(res.xiazaiQx)
+				
+				 
+				  const query = Bmob.Query('xiazai');
+				  
+				  query.get(res.xiazaiQx).then(res => {
+				    
+				    console.log('成功')
+				    
+				    $('#jiazaiTS').html('查询完成！')
+				    // //生成1期列表
+				    
+				    	let _str = '';
+				    	res.xiazai.forEach((list, i) => {
+				    		// console.log(list.key)
+				    		// console.log(list.name)
+				    		_str += `<li class="chaxun_li" >${list.name}<br>微云音频${list.wymp3url}<br>百度云音频${list.bdymp3url}<br>微云文字${list.wybookurl}<br>百度云文字${list.bdybookurl}</li>`
+				    	});
+				    	$(".chaxun_content").html(_str);
+				  					// $('#user-jiazaiTS1').html('查询完成,点击下列课程题目即可打开')
+				  							  
+				  }).catch(err => {
+				    console.log(err)
+				  })
+						
+					   // location.href = "page/mp3player.html";
+					 }).catch(err => {
+					  console.log(err.error)
+					});
+			
+			}
+			
+		</script>
+	</body>
+
+</html>
