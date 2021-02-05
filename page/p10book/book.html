@@ -17,6 +17,15 @@
 			body{
 				background-color: #FFE4E1;
 				margin: 25px 25px;
+				
+				background-image: url("https://ss2.meipian.me/users/9908934/6e677bd0-41af-11eb-b978-7548ec61a560.png-mobile");
+				background-repeat: no-repeat;
+				background-position: bottom;
+				/*
+				 * 当背景图片的background-attachment设置为fixed时，
+				 * 	背景图片的定位永远相对于浏览器的窗口
+				 */
+				background-attachment: fixed;
 			}
 			
 			#username,#usermima{
@@ -244,7 +253,7 @@
 				 const query = Bmob.Query('book');
 				 
 				 query.get(mima).then(res => {
-				   console.log(res.book)
+				   // console.log(res.book)
 				   console.log('成功')
 				   
 				   $('#jiazaiTS1').html('加载完成！')
@@ -252,8 +261,7 @@
 				   
 				   	let _str = '';
 				   	res.book.forEach((list, i) => {
-				   		console.log(list.key)
-				   		console.log(list.name)
+				   		
 				   		_str += `<li class="chaxun_li" id=${list.key}>${list.name}</li>`
 				   	});
 				   	$(".chaxun_content1").html(_str);
@@ -430,7 +438,7 @@
 				query.get(current.objectId).then(res => {
 				  // console.log(res)
 				  console.log('成功')
-				  console.log(res.unibookQx)
+				  // console.log(res.unibookQx)
 				
 				 
 				  
